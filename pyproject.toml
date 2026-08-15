@@ -1,0 +1,19 @@
+[project]
+name = "andexor-grass-soa-service"
+version = "1.0.0"
+description = "Audits the SOA DNS record for a domain"
+readme = "README.md"
+authors = [
+    { name = "Ed Jenkins", email = "ed@andexor.net" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "dnspython[idna]>=2.8.0",
+]
+
+[project.scripts]
+andexor-grass-soa-service = "andexor_grass_soa_service:main"
+
+[build-system]
+requires = ["uv_build>=0.12.4,<0.13.0"]
+build-backend = "uv_build"

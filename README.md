@@ -1,3 +1,3 @@
-# Andexor Base Template
+# Andexor Grass SOA Service
 
-This project is the skeleton of all other projects created by Andexor Network, Inc, providing starter files necessary for licensing, attribution, etc.
+Audits the SOA DNS record for a domain
