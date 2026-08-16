@@ -1,3 +1,9 @@
+<!--
+SPDX-License-Identifier: Apache-2.0
+Copyright 2026 Andexor Network, Inc.
+Author: Ed Jenkins<ed@andexor.net>
+-->
+
 # How To Contribute
 
 Thank you for your interest in contributing to this Andexor Network, Inc. project. This document outlines how to contribute to this project.
@@ -63,8 +69,7 @@ When testing API output, agent responses, web GUIs, etc., any OS can be used, th
 The following overview describes the general procedures for how to contribute to a repository.
 
 1. Clone the repository.
-1. Install build tools.
-1. Install project dependencies.
+1. Install build tools and project dependencies. See [setup.md](./setup.md) to get started.
 1. Create an issue, or ask for one to be created for you. It should read like a user story. It should contain a Description heading and an Acceptance Criteria heading. It may also have a Technical Details heading if necessary. Explain what the feature or fix is and what it is supposed to do and why it should be done. Make a note of the issue number. You will need to reference it in your git commit message.
 1. Create a new branch.
 1. If you are adding or updating a feature, update the specification first, if there is one.

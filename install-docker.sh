@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Adapted from https://docs.docker.com/engine/install/ubuntu/
+
 # Uninstall default system packages.
 sudo apt remove $(dpkg --get-selections docker docker-engine docker.io docker-compose docker-compose-v2 docker-doc docker-buildx podman-docker containerd runc > /dev/null 2>&1)
 
