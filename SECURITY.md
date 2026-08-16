@@ -1,3 +1,9 @@
+<!--
+SPDX-License-Identifier: Apache-2.0
+Copyright 2026 Andexor Network, Inc.
+Author: Ed Jenkins<ed@andexor.net>
+-->
+
 # Security Policy
 
 Thank you for helping keep Andexor Network, Inc. and its ecosystem secure. This policy stipulates our procedures for identifying and reporting on potential security issues.

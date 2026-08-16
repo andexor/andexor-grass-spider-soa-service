@@ -1,5 +1,5 @@
 [project]
-name = "andexor-grass-soa-service"
+name = "andexor-grass-spider-soa-service"
 version = "1.0.0"
 description = "Audits the SOA DNS record for a domain"
 readme = "README.md"
@@ -12,8 +12,11 @@ dependencies = [
 ]
 
 [project.scripts]
-andexor-grass-soa-service = "andexor_grass_soa_service:main"
+andexor-grass-spider-soa-service = "andexor_grass_spider_soa_service:main"
 
 [build-system]
 requires = ["uv_build>=0.12.4,<0.13.0"]
 build-backend = "uv_build"
+
+[tool.uv]
+exclude-newer = "1 week"
