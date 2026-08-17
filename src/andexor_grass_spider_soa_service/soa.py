@@ -2,12 +2,16 @@
 # Copyright 2026 Andexor Network, Inc.
 # Author: Ed Jenkins<ed@andexor.net>
 
+# from ast import List
 from dataclasses import dataclass
-# from dns.message import QueryMessage
+from dns.message import QueryMessage
 from dns.rdatatype import RdataType
 from dns.resolver import Answer, Resolver
 from dns.resolver import LifetimeTimeout, NXDOMAIN, YXDOMAIN, NoAnswer, NoNameservers
+# from dns.rrset import RRset
+# from typing import List
 
+import dns.flags
 import dns.rdataclass
 import dns.resolver
 
@@ -16,7 +20,6 @@ class SOAReport:
     """ SOA DNS record, metadata, and errors """
     # resolver
     search_domain: str | None = None
-    nameservers: list[str] | None = None
     # query
     qname: str | None = None
     ttl: float = 1.0
@@ -24,6 +27,24 @@ class SOAReport:
     error_name: str | None = None
     error_description: str | None = None
     error_message: str | None = None
+    # response
+    nameserver: str | None = None
+    id: int | None = None
+    rcode: str | None = None
+    # flags
+    flags_string: str | None = None
+    query_response_flag: bool = False
+    authoritative_answer_flag: bool = False
+    truncated_response_flag: bool = False
+    recursion_desired_flag: bool = False
+    recursion_available_flag: bool = False
+    authentic_data_flag: bool = False
+    checking_disabled_flag: bool = False
+    # sections
+    question_section: str | None = None
+    answer_section: str | None = None
+    authority_section: list[str] | None = None
+    additional_section: str | None = None
     # SOA record
     master: str | None = None
     responsible: str | None = None
@@ -48,12 +69,32 @@ def getSOAReport() -> SOAReport:
     # resolver:Resolver = Resolver()
     resolver:Resolver = dns.resolver.make_resolver_at("ns1.andexor.net")
     report.search_domain = resolver.domain.to_text()
-    # report.nameservers = [ns for ns in resolver.nameservers if isinstance(ns, str)]
     try:
         answer:Answer = resolver.resolve(qname = qname, rdtype = rdtype, tcp = tcp, lifetime = ttl)
-        report.nameservers = [answer.nameserver] if answer.nameserver is not None else []
-        # message:QueryMessage = answer.response
-        # print(message.to_text())
+        message:QueryMessage = answer.response
+        print(message.to_text())
+        # response
+        report.nameserver = answer.nameserver
+        report.id = message.id
+        report.rcode = message.rcode().name
+        # flags
+        report.flags_string = dns.flags.to_text(message.flags)
+        report.query_response_flag = bool(message.flags & dns.flags.QR)
+        report.authoritative_answer_flag = bool(message.flags & dns.flags.AA)
+        report.truncated_response_flag = bool(message.flags & dns.flags.TC)
+        report.recursion_desired_flag = bool(message.flags & dns.flags.RD)
+        report.recursion_available_flag = bool(message.flags & dns.flags.RA)
+        report.authentic_data_flag = bool(message.flags & dns.flags.AD)
+        report.checking_disabled_flag = bool(message.flags & dns.flags.CD)
+        # question
+        report.question_section = message.question[0].to_text()
+        report.answer_section = message.answer[0].to_text() if len(message.answer) > 0 else None
+        # answers:List = message.answer
+        # for a in answers:
+        #     if isinstance(a, RRset):
+        #         print(a.name)
+        #         # print(a.processing_order())
+        #         # print(f"RRset: {a.name}")
         for rdata in answer:
             # rdata.__class__ is dns.rdtypes.ANY.SOA.SOA
             if rdata.rdtype != RdataType.SOA:
